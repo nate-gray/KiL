@@ -3,50 +3,88 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.0678391959798995" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-         <children>
-            <MenuBar layoutY="-3.0" prefHeight="5.0" prefWidth="821.0">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.KiLController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
               </menus>
             </MenuBar>
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-         <children>
-            <SplitPane dividerPositions="0.7887667887667887" layoutX="54.0" layoutY="24.0" prefHeight="367.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                     <children>
-                        <ScrollPane prefViewportHeight="365.0" prefViewportWidth="642.0">
-                           <content>
-                              <TableView layoutX="40.0" layoutY="27.0" prefHeight="365.0" prefWidth="644.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                  <TableColumn prefWidth="345.0" text="Line Item" />
-                                  <TableColumn prefWidth="145.0" text="Stock" />
-                                    <TableColumn prefWidth="151.0" text="Next Shipment" />
-                                </columns>
-                              </TableView>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                     <children>
-                        <Button layoutX="11.0" layoutY="35.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Order More" />
-                        <Button layoutX="11.0" layoutY="283.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Add Line Item" />
-                        <Button layoutX="11.0" layoutY="324.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Remove Line Item" />
-                        <Button layoutX="11.0" layoutY="79.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Enter amount used" />
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-         </children></AnchorPane>
-  </items>
-</SplitPane>
+         </top>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </VBox>
+         </right>
+      </BorderPane>
+      <SplitPane dividerPositions="0.0678391959798995" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="823.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <MenuBar layoutY="-3.0" prefHeight="5.0" prefWidth="821.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Close" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <SplitPane dividerPositions="0.7887667887667887" layoutX="54.0" layoutY="24.0" prefHeight="367.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <ScrollPane prefViewportHeight="365.0" prefViewportWidth="642.0">
+                                 <content>
+                                    <TableView fx:id="table" layoutX="40.0" layoutY="27.0" prefHeight="352.0" prefWidth="644.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn fx:id="lineItemColumn" prefWidth="345.0" text="Line Item" />
+                                        <TableColumn fx:id="stockColumn" prefWidth="145.0" text="Stock" />
+                                          <TableColumn fx:id="nextShipmentColumn" prefWidth="151.0" text="Next Shipment" />
+                                      </columns>
+                                    </TableView>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="orderMore" layoutX="11.0" layoutY="35.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Order More" />
+                              <Button layoutX="11.0" layoutY="283.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Add Line Item" />
+                              <Button layoutX="11.0" layoutY="324.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Remove Line Item" />
+                              <Button layoutX="11.0" layoutY="79.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Enter amount used" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

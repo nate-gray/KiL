@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,6 +53,12 @@ public class KiLController implements Initializable {
 	
 	@FXML
 	private Button removeBtn;
+	
+	@FXML
+	private Button filterBtn;
+	
+	@FXML
+	private TextField filterTxt;
 	
 	@FXML
 	private MenuItem addNewLineItemMenu;
@@ -308,6 +315,10 @@ public class KiLController implements Initializable {
 	}
 	
 	public void handleExit() {
+		
+	}
+	
+	public void handleFilterBtn() {
 		
 	}
 		

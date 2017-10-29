@@ -89,7 +89,8 @@ public class KiLController implements Initializable {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
 		stage.setTitle("Add New Line Item");
-		stage.setScene(new Scene(parent, 282, 169));
+		stage.setScene(new Scene(parent, 282, 231));
+		stage.setResizable(false);
 		stage.showAndWait();
 	}
 		

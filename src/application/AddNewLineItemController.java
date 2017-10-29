@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class AddNewLineItemController {
 	
@@ -24,7 +25,7 @@ public class AddNewLineItemController {
 	public Button addLineItemBtn;
 	
 	@FXML 
-	public Button cancelBtn;
+	public Button closeBtn;
 	
 	@FXML
 	public Label invalidNameWarning;
@@ -89,8 +90,9 @@ public class AddNewLineItemController {
 		appMainObservableList.add(newItem);  //Add the new object to the main observable list. 
 	}
 	
-	public void handleCancelBtn(ActionEvent event) {
-		
+	public void handleCloseBtn(ActionEvent event) {
+		Stage stage = (Stage) closeBtn.getScene().getWindow();
+		stage.close();
 	}
 
 	/*

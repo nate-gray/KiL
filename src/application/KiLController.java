@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,6 +43,39 @@ public class KiLController implements Initializable {
 	
 	@FXML
 	private Button addToInventoryBtn;
+	
+	@FXML
+	private Button enterAmountUsedBtn;
+	
+	@FXML
+	private Button orderMoreBtn;
+	
+	@FXML
+	private Button removeBtn;
+	
+	@FXML
+	private MenuItem addNewLineItemMenu;
+	
+	@FXML
+	private MenuItem removeLineItemMenu;
+	
+	@FXML
+	private MenuItem sortAlphabetically;
+	
+	@FXML
+	private MenuItem sortByCurrentStock;
+	
+	@FXML
+	private MenuItem sortByShipDate;
+	
+	@FXML
+	private MenuItem importData;
+	
+	@FXML
+	private MenuItem exportData;
+	
+	@FXML
+	private MenuItem exit;
 	
 	/*
 	 * Create a new observable list that will populate the table view. 
@@ -88,6 +122,11 @@ public class KiLController implements Initializable {
 		
 		AddNewLineItemController addLineItemController = fxmlLoader.<AddNewLineItemController>getController();
 		addLineItemController.setAppMainObservableList(lineItemObservableList);  
+		
+		/*
+		 * Display the modal window
+		 */
+		
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
@@ -98,15 +137,29 @@ public class KiLController implements Initializable {
 	}
 	
 	public void addToInventoryClicked() throws IOException {
+		
+		/*
+		 * Get the selected item in the table.
+		 * TODO: If no item is selected, throw an exception and notify the user.
+		 */
+		
+		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
+		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddToInventoryView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		/*
-		 * Pass the main observable list to the new controller. 
-		 * The new controller will modify the list. 
+		 * Set the label in the new window to the selected line item. 
+		 * TODO: Also set the expected amount label. 
 		 */
 		
-//		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController(); 
+		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
+		addToInventoryController.setLabel(selectedLineItem);
+		
+		/*
+		 * Display the modal window for adding to the inventory.
+		 */
+		
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
@@ -114,6 +167,123 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 315, 209));
 		stage.setResizable(false);
 		stage.showAndWait();
+	}
+	
+	public void enterAmountUsedClicked() throws IOException {
+		/*
+		 * Get the selected item in the table.
+		 * TODO: If no item is selected, throw an exception and notify the user.
+		 */
+		
+		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AmountUsedView.fxml"));
+		Parent parent = fxmlLoader.load();
+		
+		/*
+		 * Set the label in the new window to the selected line item. 
+		 */
+		
+		AmountUsedController amountUsedController = fxmlLoader.<AmountUsedController>getController();
+		amountUsedController.setLabel(selectedLineItem);
+		
+		/*
+		 * Display the modal window for entering the amount used. 
+		 */
+		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOpacity(1);
+		stage.setTitle("Enter Amount Used");
+		stage.setScene(new Scene(parent, 316, 184));
+		stage.setResizable(false);
+		stage.showAndWait();
+	}
+	
+	public void orderMoreClicked() throws IOException {
+		/*
+		 * Get the selected item in the table.
+		 * TODO: If no item is selected, throw an exception and notify the user.
+		 */
+		
+		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderMoreView.fxml"));
+		Parent parent = fxmlLoader.load();
+		
+		/*
+		 * Set the label in the new window to the selected line item. 
+		 */
+		
+		OrderMoreController orderMoreController = fxmlLoader.<OrderMoreController>getController();
+		orderMoreController.setLabel(selectedLineItem);
+		
+		/*
+		 * Display the modal window for ordering more. 
+		 */
+		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOpacity(1);
+		stage.setTitle("Order More");
+		stage.setScene(new Scene(parent, 418, 243));
+		stage.setResizable(false);
+		stage.showAndWait();
+	}
+	
+	public void removeClicked() throws IOException {
+		/*
+		 * Get the selected item in the table.
+		 * TODO: If no item is selected, throw an exception and notify the user.
+		 */
+		
+		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RemoveItemView.fxml"));
+		Parent parent = fxmlLoader.load();
+		
+		/*
+		 * Set the label in the new window to the selected line item. 
+		 */
+		
+		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
+		removeItemController.setLabel(selectedLineItem);
+		
+		/*
+		 * Display the modal window for removing an item. 
+		 */
+		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOpacity(1);
+		stage.setTitle("Remove Item");
+		stage.setScene(new Scene(parent, 296, 159));
+		stage.setResizable(false);
+		stage.showAndWait();
+	}
+	
+	public void handleSortAlphabetically() {
+		
+	}
+	
+	public void handleSortByStock() {
+		
+	}
+	
+	public void handleSortByDate() {
+		
+	}
+	
+	public void handleImportData() {
+		
+	}
+	
+	public void handleExportData() {
+		
+	}
+	
+	public void handleExit() {
+		
 	}
 		
 }

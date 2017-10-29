@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="184.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AmountUsedController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Selected Item:" />
+      <Label fx:id="itemLbl" layoutX="121.0" layoutY="14.0" prefHeight="17.0" prefWidth="128.0" />
+      <Label layoutX="14.0" layoutY="52.0" text="Amount Used:" />
+      <TextField fx:id="amountUsedTxt" layoutX="121.0" layoutY="47.0" />
+      <Button fx:id="enterAMountUsedBtn" layoutX="14.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleEnterAmountUsedBtn" prefHeight="27.0" prefWidth="274.0" text="Enter Amount Used" />
+      <Button fx:id="closeBtn" layoutX="14.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleCloseBtn" prefHeight="27.0" prefWidth="274.0" text="Close" />
+      <Label layoutX="121.0" layoutY="82.0" prefHeight="17.0" prefWidth="97.0" textFill="RED" />
+   </children>
+</Pane>

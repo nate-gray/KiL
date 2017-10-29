@@ -38,7 +38,10 @@ public class KiLController implements Initializable {
 	public TableColumn<LineItem, String> nextShipmentColumn;
 	
 	@FXML
-	public Button addBtn;
+	public Button addLineItemBtn;
+	
+	@FXML
+	private Button addToInventoryBtn;
 	
 	/*
 	 * Create a new observable list that will populate the table view. 
@@ -90,6 +93,25 @@ public class KiLController implements Initializable {
 		stage.setOpacity(1);
 		stage.setTitle("Add New Line Item");
 		stage.setScene(new Scene(parent, 282, 231));
+		stage.setResizable(false);
+		stage.showAndWait();
+	}
+	
+	public void addToInventoryClicked() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddToInventoryView.fxml"));
+		Parent parent = fxmlLoader.load();
+		
+		/*
+		 * Pass the main observable list to the new controller. 
+		 * The new controller will modify the list. 
+		 */
+		
+//		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController(); 
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOpacity(1);
+		stage.setTitle("Add To Inventory");
+		stage.setScene(new Scene(parent, 315, 209));
 		stage.setResizable(false);
 		stage.showAndWait();
 	}

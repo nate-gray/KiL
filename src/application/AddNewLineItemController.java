@@ -90,6 +90,10 @@ public class AddNewLineItemController {
 		appMainObservableList.add(newItem);  //Add the new object to the main observable list. 
 	}
 	
+	/*
+	 * Close the modal window.
+	 */
+	
 	public void handleCloseBtn(ActionEvent event) {
 		Stage stage = (Stage) closeBtn.getScene().getWindow();
 		stage.close();

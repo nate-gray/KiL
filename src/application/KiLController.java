@@ -140,9 +140,11 @@ public class KiLController implements Initializable {
 		
 		/*
 		 * Get the selected item in the table.
-		 * TODO: If no item is selected, throw an exception and notify the user.
 		 */
 		
+		if(theTable.getSelectionModel().getSelectedItem() == null) {
+			displayNoItemSelectedWarning();
+		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddToInventoryView.fxml"));
@@ -172,9 +174,11 @@ public class KiLController implements Initializable {
 	public void enterAmountUsedClicked() throws IOException {
 		/*
 		 * Get the selected item in the table.
-		 * TODO: If no item is selected, throw an exception and notify the user.
 		 */
 		
+		if(theTable.getSelectionModel().getSelectedItem() == null) {
+			displayNoItemSelectedWarning();
+		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AmountUsedView.fxml"));
@@ -203,9 +207,11 @@ public class KiLController implements Initializable {
 	public void orderMoreClicked() throws IOException {
 		/*
 		 * Get the selected item in the table.
-		 * TODO: If no item is selected, throw an exception and notify the user.
 		 */
 		
+		if(theTable.getSelectionModel().getSelectedItem() == null) {
+			displayNoItemSelectedWarning();
+		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderMoreView.fxml"));
@@ -234,9 +240,11 @@ public class KiLController implements Initializable {
 	public void removeClicked() throws IOException {
 		/*
 		 * Get the selected item in the table.
-		 * TODO: If no item is selected, throw an exception and notify the user.
 		 */
 		
+		if(theTable.getSelectionModel().getSelectedItem() == null) {
+			displayNoItemSelectedWarning();
+		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RemoveItemView.fxml"));
@@ -258,6 +266,23 @@ public class KiLController implements Initializable {
 		stage.setOpacity(1);
 		stage.setTitle("Remove Item");
 		stage.setScene(new Scene(parent, 296, 159));
+		stage.setResizable(false);
+		stage.showAndWait();
+	}
+	
+	public void displayNoItemSelectedWarning() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NoItemSelectedView.fxml"));
+		Parent parent = fxmlLoader.load();
+		
+		/*
+		 * Display the modal window for adding to the inventory.
+		 */
+		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOpacity(1);
+		stage.setTitle("Add To Inventory");
+		stage.setScene(new Scene(parent, 375, 84));
 		stage.setResizable(false);
 		stage.showAndWait();
 	}

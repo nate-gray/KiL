@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="209.0" maxWidth="315.0" minHeight="209.0" minWidth="315.0" prefHeight="209.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddToInventoryController">
+   <children>
+      <RadioButton fx:id="expectedRadio" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleExpectedRadio" text="Expected in next shipment" />
+      <RadioButton fx:id="customRadio" layoutX="14.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleCustomRadio" text="Custom" />
+      <Button fx:id="addToStockBtn" layoutX="14.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleAddToStockBtn" prefHeight="27.0" prefWidth="285.0" text="Add to stock" />
+      <TextField fx:id="customTxtFld" editable="false" layoutX="133.0" layoutY="78.0" />
+      <Label fx:id="expectedAmountLbl" layoutX="210.0" layoutY="45.0" prefHeight="17.0" prefWidth="91.0" textAlignment="CENTER" />
+      <Button fx:id="closeBtn" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleCloseBtn" prefHeight="27.0" prefWidth="285.0" text="Close" />
+      <Label layoutX="16.0" layoutY="14.0" prefHeight="17.0" prefWidth="103.0" text="Selected Item: " />
+      <Label fx:id="itemLbl" layoutX="157.0" layoutY="14.0" prefHeight="17.0" prefWidth="142.0" />
+   </children>
+</Pane>

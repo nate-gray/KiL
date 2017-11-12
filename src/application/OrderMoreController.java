@@ -30,7 +30,7 @@ public class OrderMoreController {
 	}
 	
 	public void handleEnterShipmentBtn(ActionEvent event) {
-		
+		// add item into inventory
 	}
 	
 	public void handleDatePicker(ActionEvent event) {

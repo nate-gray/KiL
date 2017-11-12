@@ -34,7 +34,8 @@ public class AddToInventoryController {
 	private LineItem selectedItem;
 	
 	public void handleAddToStockBtn(ActionEvent event) {
-		
+		// add to current stock
+		this.selectedItem.setCurrentStock(selectedItem.getCurrentStock() + 2);
 	}
 	
 	public void handleCloseBtn(ActionEvent event) {

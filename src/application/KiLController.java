@@ -179,6 +179,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 315, 209));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void enterAmountUsedClicked() throws IOException {

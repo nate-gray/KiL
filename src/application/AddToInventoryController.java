@@ -65,6 +65,7 @@ public class AddToInventoryController {
 		customRadio.setSelected(true);
 		customTxtFld.setDisable(false);
 		expectedAmountLbl.setDisable(true);
+		customTxtFld.setEditable(true);
 	}
 	
 	public void setSelectedItem(LineItem item) {

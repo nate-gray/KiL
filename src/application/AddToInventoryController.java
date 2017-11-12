@@ -9,41 +9,48 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 public class AddToInventoryController {
-	
+
 	@FXML
 	private Label itemLbl;
-	
+
 	@FXML
 	private Label expectedAmountLbl;
-	
+
 	@FXML 
 	private TextField customTxtFld;
-	
+
 	@FXML
 	private Button addToStockBtn;
-	
+
 	@FXML
 	private Button closeBtn;
-	
+
 	@FXML
 	private RadioButton expectedRadio;
-	
+
 	@FXML
 	private RadioButton customRadio;
-	
+
 	private LineItem selectedItem;
-	
-	public void handleAddToStockBtn(ActionEvent event) {
+
+	public void handleAddToStockBtn(ActionEvent event) throws Exception {
 		// add to current stock
-		this.selectedItem.setCurrentStock(selectedItem.getCurrentStock() + Integer.parseInt(customTxtFld.getText()));
-		selectedItem.setStockForTable(selectedItem.getCurrentStock());
+		int newStock = selectedItem.getCurrentStock() + Integer.parseInt(customTxtFld.getText());
+		if(newStock <= 999) {
+			this.selectedItem.setCurrentStock(newStock);
+			selectedItem.setStockForTable(selectedItem.getCurrentStock());
+		}
+		else {
+			/// need to figure out exception handling
+			throw new Exception();
+		}
 	}
-	
+
 	public void handleCloseBtn(ActionEvent event) {
 		Stage stage = (Stage) closeBtn.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	/*
 	 * If the expected radio button is chosen, make sure the custom button is deselected.
 	 * Disable the text field so the user cannot enter any values.
@@ -55,7 +62,7 @@ public class AddToInventoryController {
 		customTxtFld.setDisable(true);
 		expectedAmountLbl.setDisable(false);
 	}
-	
+
 	/*
 	 * If the custom radio button is chosen, make sure the expected button is deselected. 
 	 * Disable the expected label.
@@ -67,7 +74,7 @@ public class AddToInventoryController {
 		expectedAmountLbl.setDisable(true);
 		customTxtFld.setEditable(true);
 	}
-	
+
 	public void setSelectedItem(LineItem item) {
 		this.selectedItem = item;
 	}

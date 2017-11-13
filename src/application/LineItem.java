@@ -1,7 +1,7 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.PriorityQueue;
+import java.time.LocalDate;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,10 +26,10 @@ public class LineItem {
 	
 	private String itemName; // Name of the current line item. 
 	private int currentStock; // The current amount of stock available. 
-	private Calendar nextShipment; // The date of the next expected shipment. 
-	private int nextShipmentAmount; // The amount of stock expected in the next shipment. 
+	//private Calendar nextShipment; // The date of the next expected shipment. 
+	//private int nextShipmentAmount; // The amount of stock expected in the next shipment. 
 	private int amountUsedToday;  // The amount of stock used for the current business day.
-	private ArrayList<PendingOrder> pendingOrderList = new ArrayList<PendingOrder>();  // List of PendingOrder objects.
+	private PriorityQueue<PendingOrder> pendingOrderQueue = new PriorityQueue<PendingOrder>();  // queue of PendingOrder objects.
 	
 	/*
 	 * Line item constructor.  When a new line item is created, use the values entered from the modal window, and set the 
@@ -57,18 +57,20 @@ public class LineItem {
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
 	}
-	public Calendar getNextShipment() {
-		return nextShipment;
+	public LocalDate getNextShipment() {
+		return pendingOrderQueue.peek().getExpectedArrival();
 	}
-	public void setNextShipment(Calendar nextShipment) {
-		this.nextShipment = nextShipment;
-	}
+	// removing -- we should only add to next shipments through the queue
+	//public void setNextShipment(Calendar nextShipment) {
+	//	this.nextShipment = nextShipment;
+	//}
 	public int getNextShipmentAmount() {
-		return nextShipmentAmount;
+		return pendingOrderQueue.peek().getExpectedAmount();
 	}
-	public void setNextShipmentAmount(int nextShipmentAmount) {
-		this.nextShipmentAmount = nextShipmentAmount;
-	}
+	// removing -- we should only add to next shipments through the queue
+	//public void setNextShipmentAmount(int nextShipmentAmount) {
+	//	this.nextShipmentAmount = nextShipmentAmount;
+	//}
 	public int getAmountUsedToday() {
 		return amountUsedToday;
 	}
@@ -103,9 +105,14 @@ public class LineItem {
 	 * Create a new pending order object, and then add it to the pending order list.
 	 */
 	
-	public void addToPendingShipments(int expectedAmount, Calendar expectedDate) {	
+	public void addToPendingShipments(int expectedAmount, LocalDate expectedDate) {	
 		PendingOrder pending = new PendingOrder(expectedAmount, expectedDate);
-		pendingOrderList.add(pending);
+		pendingOrderQueue.add(pending);
+	}
+	
+	// removes next shipment from the queue and returns it
+	public PendingOrder pollNextShipment() {
+		return pendingOrderQueue.poll();
 	}
 	
 }

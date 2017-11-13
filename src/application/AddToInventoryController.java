@@ -34,15 +34,33 @@ public class AddToInventoryController {
 	private LineItem selectedItem;
 
 	public void handleAddToStockBtn(ActionEvent event) throws Exception {
-		// add to current stock
-		int newStock = selectedItem.getCurrentStock() + Integer.parseInt(customTxtFld.getText());
+		
+		// make a variable for the new stock, starting with the current stock. We'll add to it later
+		int newStock = this.selectedItem.getCurrentStock();
+		
+		if(expectedRadio.isSelected()) {
+		// add next expected shipment to current stock
+			PendingOrder nextShipment = this.selectedItem.pollNextShipment(); // removes next shipment from queue
+			if(nextShipment == null) {
+				/// todo: need to figure out exception handling, I think we should save for end though
+				throw new Exception("No next shipment in queue");
+			}
+			newStock += nextShipment.getExpectedAmount();
+		}
+		else if(customRadio.isSelected()) {
+			// add custom amount to current stock
+			newStock += Integer.parseInt(customTxtFld.getText());
+		}
+		else {
+			throw new Exception("No radio button was selected");
+		}
+		
 		if(newStock <= 999) {
 			this.selectedItem.setCurrentStock(newStock);
 			selectedItem.setStockForTable(selectedItem.getCurrentStock());
 		}
-		else {
-			/// need to figure out exception handling
-			throw new Exception();
+		else { // new stock > 999
+			throw new Exception("Stock cannot exceed 999");
 		}
 	}
 

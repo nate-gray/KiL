@@ -12,6 +12,7 @@ public class OrderMoreController {
 	
 	@FXML
 	private Label itemLbl;
+	private LineItem item;
 	
 	@FXML
 	private DatePicker datePicker;
@@ -25,16 +26,20 @@ public class OrderMoreController {
 	@FXML
 	private Button closeBtn;
 	
-	public void setLabel(LineItem item) {
-		this.itemLbl.setText(item.getItemName());
+	public void setLabel(LineItem newItem) {
+		this.itemLbl.setText(newItem.getItemName());
+		this.item = newItem;
 	}
 	
 	public void handleEnterShipmentBtn(ActionEvent event) {
 		// add item into inventory
+		this.item.addToPendingShipments(
+				Integer.parseInt(amountExpectedTxt.getText()), 
+				this.datePicker.getValue()); // gets LocalDate object from datePicker
 	}
 	
 	public void handleDatePicker(ActionEvent event) {
-		
+		// the datePicker seems to be working fine without any code here
 	}
 	
 	public void handleCloseBtn(ActionEvent event) {

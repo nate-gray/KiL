@@ -26,9 +26,6 @@ public class LineItem {
 	
 	private String itemName; // Name of the current line item. 
 	private int currentStock; // The current amount of stock available. 
-	//private Calendar nextShipment; // The date of the next expected shipment. 
-	//private int nextShipmentAmount; // The amount of stock expected in the next shipment. 
-	private int amountUsedToday;  // The amount of stock used for the current business day.
 	private PriorityQueue<PendingOrder> pendingOrderQueue = new PriorityQueue<PendingOrder>();  // queue of PendingOrder objects.
 	
 	/*
@@ -56,48 +53,25 @@ public class LineItem {
 	}
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
+		this.stockForTable = new SimpleIntegerProperty(currentStock); /// what does this do? (Andy)
 	}
-	public LocalDate getNextShipment() {
-		return pendingOrderQueue.peek().getExpectedArrival();
-	}
-	// removing -- we should only add to next shipments through the queue
-	//public void setNextShipment(Calendar nextShipment) {
-	//	this.nextShipment = nextShipment;
-	//}
-	public int getNextShipmentAmount() {
-		return pendingOrderQueue.peek().getExpectedAmount();
-	}
-	// removing -- we should only add to next shipments through the queue
-	//public void setNextShipmentAmount(int nextShipmentAmount) {
-	//	this.nextShipmentAmount = nextShipmentAmount;
-	//}
-	public int getAmountUsedToday() {
-		return amountUsedToday;
-	}
-	public void setAmountUsedToday(int amountUsedToday) {
-		this.amountUsedToday = amountUsedToday;
-	}
-	public String getItemNameForTable() {
+	public String getItemNameForTable() { /// is this needed/used? (Andy)
 		return itemNameForTable.get();
 	}
 
-	public void setItemNameForTable(String itemNameForTable) {
+	public void setItemNameForTable(String itemNameForTable) { /// is this needed/used? (Andy)
 		this.itemNameForTable = new SimpleStringProperty(itemNameForTable);
 	}
 
-	public Integer getStockForTable() {
+	public Integer getStockForTable() { /// is this needed/used? (Andy)
 		return stockForTable.get();
 	}
 
-	public void setStockForTable(Integer stockForTable) {
-		this.stockForTable = new SimpleIntegerProperty(stockForTable);
-	}
-
-	public String getNextShipmentForTable() {
+	public String getNextShipmentForTable() { /// is this needed/used? (Andy)
 		return nextShipmentForTable.get();
 	}
 
-	public void setNextShipmentForTable(String nextShipmentForTable) {
+	public void setNextShipmentForTable(String nextShipmentForTable) { /// is this needed/used? (Andy)
 		this.nextShipmentForTable = new SimpleStringProperty(nextShipmentForTable);
 	}
 	
@@ -111,7 +85,7 @@ public class LineItem {
 	}
 	
 	// removes next shipment from the queue and returns it
-	public PendingOrder pollNextShipment() {
+	public PendingOrder removeNextShipment() {
 		return pendingOrderQueue.poll();
 	}
 	

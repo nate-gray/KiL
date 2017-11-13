@@ -11,6 +11,7 @@ public class AmountUsedController {
 	
 	@FXML
 	private Label itemLbl;
+	private LineItem item;
 	
 	@FXML
 	private TextField amountUsedTxt;
@@ -24,14 +25,20 @@ public class AmountUsedController {
 	public void setLabel(LineItem item) {
 		// set name of item
 		this.itemLbl.setText(item.getItemName());
+		this.item = item;
 	}
 	
-	public void handleEnterAmountUsedBtn(ActionEvent event) {
-		// if amount used is <= current quantity
-		// subtract the amount used from current quantity
-		
+	public void handleEnterAmountUsedBtn(ActionEvent event) throws Exception {
+		// Calculate what new stock should be (current - amount used)
+		int newStock = item.getCurrentStock() - Integer.parseInt(amountUsedTxt.getText());
+		if(newStock >= 0) {
+			// if >= 0, subtract the amount used from current quantity
+			item.setCurrentStock(newStock);
+		}
 		// else, display an error
-		
+		else {
+			throw new Exception("Stock cannot be negative");
+		}
 	}
 	
 	public void handleCloseBtn(ActionEvent event) {

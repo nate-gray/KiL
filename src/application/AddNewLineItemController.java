@@ -83,7 +83,7 @@ public class AddNewLineItemController {
 		
 		String name = itemName.getText();
 		if(name.length() == 0) {
-			throw new Exception();
+			throw new Exception("Name length cannot be 0");
 		}
 		int stock = Integer.parseInt(initialStock.getText()); // Get the text from the field and convert it to an int. 
 		LineItem newItem = new LineItem(name, stock); //Create a new LineItem object

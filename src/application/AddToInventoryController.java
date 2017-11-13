@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+// adding some comments for a demo. 
+
 public class AddToInventoryController {
 
 	@FXML

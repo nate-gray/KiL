@@ -26,7 +26,7 @@ public class RemoveItemController {
 
 	private LineItem item;
 	
-	public void setLabel(LineItem item) {
+	public void initialize(LineItem item) {
 		this.itemLbl.setText(item.getItemName());
 		this.item = item;
 	}

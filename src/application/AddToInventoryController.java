@@ -51,7 +51,7 @@ public class AddToInventoryController {
 			// add custom amount to current stock
 			newStock += Integer.parseInt(customTxtFld.getText());
 		}
-		else {
+		else { /// we should have one default
 			throw new Exception("No radio button was selected");
 		}
 		
@@ -74,6 +74,9 @@ public class AddToInventoryController {
 	 * Enable the expected label.
 	 */
 	public void handleExpectedRadio(ActionEvent event) {
+		setExpectedRadio();
+	}
+	private void setExpectedRadio() {
 		expectedRadio.setSelected(true);
 		customRadio.setSelected(false);
 		customTxtFld.setDisable(true);
@@ -95,8 +98,12 @@ public class AddToInventoryController {
 	public void setSelectedItem(LineItem item) {
 		this.selectedItem = item;
 	}
-	public void setLabel(LineItem item) {
+	
+	// set up text, item, and defaults for this Controller
+	public void initialize(LineItem item) {
 		this.itemLbl.setText(item.getItemName());
+		this.selectedItem = item;
+		setExpectedRadio(); // set the expected shipment as the default
 	}
 
 }

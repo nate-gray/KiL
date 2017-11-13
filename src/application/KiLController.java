@@ -142,7 +142,7 @@ public class KiLController implements Initializable {
 		stage.setResizable(false);
 		stage.showAndWait();
 		
-		// doesn't need a refresh, AddNewLineItemController adds to the item list (lineItemObservableList) directly
+		// doesn't need a refresh, AddNewLineItemController adds to the lineItemObservableList directly
 	}
 	
 	public void addToInventoryClicked() throws IOException {
@@ -165,10 +165,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
-		addToInventoryController.setLabel(selectedLineItem);
-		
-		// also set the line item so it can be added to
-		addToInventoryController.setSelectedItem(selectedLineItem);
+		addToInventoryController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -203,7 +200,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AmountUsedController amountUsedController = fxmlLoader.<AmountUsedController>getController();
-		amountUsedController.setLabel(selectedLineItem);
+		amountUsedController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for entering the amount used. 
@@ -238,7 +235,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		OrderMoreController orderMoreController = fxmlLoader.<OrderMoreController>getController();
-		orderMoreController.setLabel(selectedLineItem);
+		orderMoreController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for ordering more. 
@@ -273,7 +270,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
-		removeItemController.setLabel(selectedLineItem);
+		removeItemController.initialize(selectedLineItem);
 		
 		removeItemController.setAppMainObservableList(lineItemObservableList);  
 		
@@ -288,6 +285,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 296, 159));
 		stage.setResizable(false);
 		stage.showAndWait();
+
+		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
 	public void displayNoItemSelectedWarning() throws IOException {

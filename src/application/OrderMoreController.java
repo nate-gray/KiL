@@ -33,7 +33,6 @@ public class OrderMoreController {
 	
 	public void handleEnterShipmentBtn(ActionEvent event) {
 		// add item into inventory
-		//Integer.parseInt(customTxtFld.getText())
 		this.item.addToPendingShipments(
 				Integer.parseInt(amountExpectedTxt.getText()), 
 				this.datePicker.getValue()); // gets LocalDate object from datePicker

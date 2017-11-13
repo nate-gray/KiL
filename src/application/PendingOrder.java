@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * These objects will be stored in an ArrayList of the LineItem object.
  */
 
-public class PendingOrder {
+public class PendingOrder implements Comparable<PendingOrder> {
 	
 	private int expectedAmount; // Amount expected in the pending order.
 	private LocalDate expectedArrival; // Expected arrival date of the shipment. 
@@ -30,4 +30,8 @@ public class PendingOrder {
 		this.expectedArrival = expectedArrival;
 	}
 
+	public int compareTo(PendingOrder o) {
+		return this.expectedArrival.compareTo(o.expectedArrival);
+	}
+	
 }

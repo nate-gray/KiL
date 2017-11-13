@@ -26,7 +26,7 @@ public class OrderMoreController {
 	@FXML
 	private Button closeBtn;
 	
-	public void setLabel(LineItem newItem) {
+	public void initialize(LineItem newItem) {
 		this.itemLbl.setText(newItem.getItemName());
 		this.item = newItem;
 	}

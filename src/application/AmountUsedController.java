@@ -22,7 +22,7 @@ public class AmountUsedController {
 	@FXML
 	private Button closeBtn;
 	
-	public void setLabel(LineItem item) {
+	public void initialize(LineItem item) {
 		// set name of item
 		this.itemLbl.setText(item.getItemName());
 		this.item = item;

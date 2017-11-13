@@ -40,7 +40,7 @@ public class AddToInventoryController {
 		
 		if(expectedRadio.isSelected()) {
 		// add next expected shipment to current stock
-			PendingOrder nextShipment = this.selectedItem.pollNextShipment(); // removes next shipment from queue
+			PendingOrder nextShipment = this.selectedItem.removeNextShipment();
 			if(nextShipment == null) {
 				/// todo: need to figure out exception handling, I think we should save for end though
 				throw new Exception("No next shipment in queue");
@@ -57,7 +57,6 @@ public class AddToInventoryController {
 		
 		if(newStock <= 999) {
 			this.selectedItem.setCurrentStock(newStock);
-			selectedItem.setStockForTable(selectedItem.getCurrentStock());
 		}
 		else { // new stock > 999
 			throw new Exception("Stock cannot exceed 999");

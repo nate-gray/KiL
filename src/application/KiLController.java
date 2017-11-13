@@ -141,6 +141,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 282, 231));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		// doesn't need a refresh, AddNewLineItemController adds to the item list (lineItemObservableList) directly
 	}
 	
 	public void addToInventoryClicked() throws IOException {
@@ -214,6 +216,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 316, 184));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void orderMoreClicked() throws IOException {
@@ -247,6 +251,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 418, 243));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		// doesn't need a refresh since the order queue is (currently) hidden from the user
 	}
 	
 	public void removeClicked() throws IOException {
@@ -268,6 +274,8 @@ public class KiLController implements Initializable {
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
 		removeItemController.setLabel(selectedLineItem);
+		
+		removeItemController.setAppMainObservableList(lineItemObservableList);  
 		
 		/*
 		 * Display the modal window for removing an item. 

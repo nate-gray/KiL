@@ -1,6 +1,6 @@
 package application;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 /*
  * This class is used to create a new pendingOrder object. 
@@ -10,9 +10,9 @@ import java.util.Calendar;
 public class PendingOrder {
 	
 	private int expectedAmount; // Amount expected in the pending order.
-	private Calendar expectedArrival; // Expected arrival date of the shipment. 
+	private LocalDate expectedArrival; // Expected arrival date of the shipment. 
 	
-	public PendingOrder(int amount, Calendar date) {
+	public PendingOrder(int amount, LocalDate date) {
 		expectedAmount = amount;
 		expectedArrival = date;
 	}
@@ -23,10 +23,10 @@ public class PendingOrder {
 	public void setExpectedAmount(int expectedAmount) {
 		this.expectedAmount = expectedAmount;
 	}
-	public Calendar getExpectedArrival() {
+	public LocalDate getExpectedArrival() {
 		return expectedArrival;
 	}
-	public void setExpectedArrival(Calendar expectedArrival) {
+	public void setExpectedArrival(LocalDate expectedArrival) {
 		this.expectedArrival = expectedArrival;
 	}
 

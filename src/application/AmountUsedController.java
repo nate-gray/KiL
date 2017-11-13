@@ -22,10 +22,15 @@ public class AmountUsedController {
 	private Button closeBtn;
 	
 	public void setLabel(LineItem item) {
+		// set name of item
 		this.itemLbl.setText(item.getItemName());
 	}
 	
 	public void handleEnterAmountUsedBtn(ActionEvent event) {
+		// if amount used is <= current quantity
+		// subtract the amount used from current quantity
+		
+		// else, display an error
 		
 	}
 	

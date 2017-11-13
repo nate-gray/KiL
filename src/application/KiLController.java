@@ -159,11 +159,14 @@ public class KiLController implements Initializable {
 		
 		/*
 		 * Set the label in the new window to the selected line item. 
-		 * TODO: Also set the expected amount label. 
+		 * TODO: Also set the expected amount label.
 		 */
 		
 		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
 		addToInventoryController.setLabel(selectedLineItem);
+		
+		// also set the line item so it can be added to
+		addToInventoryController.setSelectedItem(selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -176,6 +179,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 315, 209));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void enterAmountUsedClicked() throws IOException {

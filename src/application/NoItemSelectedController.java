@@ -14,6 +14,10 @@ public class NoItemSelectedController {
 	@FXML 
 	private Label messageLbl;
 	
+	public void initialize(String message) {
+		messageLbl.setText(message);
+	}
+	
 	public void handleCloseBtn(ActionEvent event) {
 		Stage stage = (Stage) okayBtn.getScene().getWindow();
 		stage.close();

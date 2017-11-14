@@ -152,7 +152,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -188,7 +188,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -223,7 +223,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -258,7 +258,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -289,8 +289,8 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
-	public void displayNoItemSelectedWarning() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NoItemSelectedView.fxml"));
+	public void displayWarning() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		/*
@@ -300,7 +300,7 @@ public class KiLController implements Initializable {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
-		stage.setTitle("Add To Inventory");
+		stage.setTitle("Warning!");
 		stage.setScene(new Scene(parent, 375, 84));
 		stage.setResizable(false);
 		stage.showAndWait();

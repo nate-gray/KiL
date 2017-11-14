@@ -66,6 +66,9 @@ public class AddNewLineItemController {
 			invalidNameWarning.setVisible(true);
 			e.printStackTrace();
 		}
+		
+		// Close this window once the user clicks "Add Line Item"
+		handleCloseBtn(null);
 	}
 	
 	/*

@@ -293,8 +293,9 @@ public class KiLController implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
-		NoItemSelectedController removeItemController = fxmlLoader.<NoItemSelectedController>getController();
-		removeItemController.initialize("Test");
+		// put the warning controller in here? -- need an initializier
+		//NoItemSelectedController removeItemController = fxmlLoader.<NoItemSelectedController>getController();
+		//removeItemController.initialize("Test");
 		
 		/*
 		 * Display the modal window for adding to the inventory.

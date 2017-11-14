@@ -141,6 +141,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 282, 231));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		// doesn't need a refresh, AddNewLineItemController adds to the lineItemObservableList directly
 	}
 	
 	public void addToInventoryClicked() throws IOException {
@@ -150,7 +152,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -159,11 +161,11 @@ public class KiLController implements Initializable {
 		
 		/*
 		 * Set the label in the new window to the selected line item. 
-		 * TODO: Also set the expected amount label. 
+		 * TODO: Also set the expected amount label.
 		 */
 		
 		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
-		addToInventoryController.setLabel(selectedLineItem);
+		addToInventoryController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -176,6 +178,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 315, 209));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void enterAmountUsedClicked() throws IOException {
@@ -184,7 +188,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -196,7 +200,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AmountUsedController amountUsedController = fxmlLoader.<AmountUsedController>getController();
-		amountUsedController.setLabel(selectedLineItem);
+		amountUsedController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for entering the amount used. 
@@ -209,6 +213,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 316, 184));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void orderMoreClicked() throws IOException {
@@ -217,7 +223,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -229,7 +235,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		OrderMoreController orderMoreController = fxmlLoader.<OrderMoreController>getController();
-		orderMoreController.setLabel(selectedLineItem);
+		orderMoreController.initialize(selectedLineItem);
 		
 		/*
 		 * Display the modal window for ordering more. 
@@ -242,6 +248,8 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 418, 243));
 		stage.setResizable(false);
 		stage.showAndWait();
+		
+		theTable.refresh();
 	}
 	
 	public void removeClicked() throws IOException {
@@ -250,7 +258,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -262,7 +270,9 @@ public class KiLController implements Initializable {
 		 */
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
-		removeItemController.setLabel(selectedLineItem);
+		removeItemController.initialize(selectedLineItem);
+		
+		removeItemController.setAppMainObservableList(lineItemObservableList);  
 		
 		/*
 		 * Display the modal window for removing an item. 
@@ -275,10 +285,12 @@ public class KiLController implements Initializable {
 		stage.setScene(new Scene(parent, 296, 159));
 		stage.setResizable(false);
 		stage.showAndWait();
+
+		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
-	public void displayNoItemSelectedWarning() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NoItemSelectedView.fxml"));
+	public void displayWarning() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		/*
@@ -288,7 +300,7 @@ public class KiLController implements Initializable {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
-		stage.setTitle("Add To Inventory");
+		stage.setTitle("Warning!");
 		stage.setScene(new Scene(parent, 375, 84));
 		stage.setResizable(false);
 		stage.showAndWait();

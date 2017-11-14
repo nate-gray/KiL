@@ -1,7 +1,8 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.PriorityQueue;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,10 +27,7 @@ public class LineItem {
 	
 	private String itemName; // Name of the current line item. 
 	private int currentStock; // The current amount of stock available. 
-	private Calendar nextShipment; // The date of the next expected shipment. 
-	private int nextShipmentAmount; // The amount of stock expected in the next shipment. 
-	private int amountUsedToday;  // The amount of stock used for the current business day.
-	private ArrayList<PendingOrder> pendingOrderList = new ArrayList<PendingOrder>();  // List of PendingOrder objects.
+	private PriorityQueue<PendingOrder> pendingOrderQueue = new PriorityQueue<PendingOrder>();  // queue of PendingOrder objects.
 	
 	/*
 	 * Line item constructor.  When a new line item is created, use the values entered from the modal window, and set the 
@@ -56,24 +54,7 @@ public class LineItem {
 	}
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
-	}
-	public Calendar getNextShipment() {
-		return nextShipment;
-	}
-	public void setNextShipment(Calendar nextShipment) {
-		this.nextShipment = nextShipment;
-	}
-	public int getNextShipmentAmount() {
-		return nextShipmentAmount;
-	}
-	public void setNextShipmentAmount(int nextShipmentAmount) {
-		this.nextShipmentAmount = nextShipmentAmount;
-	}
-	public int getAmountUsedToday() {
-		return amountUsedToday;
-	}
-	public void setAmountUsedToday(int amountUsedToday) {
-		this.amountUsedToday = amountUsedToday;
+		setStockForTable(currentStock);
 	}
 	public String getItemNameForTable() {
 		return itemNameForTable.get();
@@ -86,11 +67,11 @@ public class LineItem {
 	public Integer getStockForTable() {
 		return stockForTable.get();
 	}
-
-	public void setStockForTable(Integer stockForTable) {
-		this.stockForTable = new SimpleIntegerProperty(stockForTable);
+	
+	public void setStockForTable(int stockForTable) {
+		this.stockForTable = new SimpleIntegerProperty(currentStock); /// what does this do? (Andy)
 	}
-
+	
 	public String getNextShipmentForTable() {
 		return nextShipmentForTable.get();
 	}
@@ -99,13 +80,38 @@ public class LineItem {
 		this.nextShipmentForTable = new SimpleStringProperty(nextShipmentForTable);
 	}
 	
+	public boolean hasNextShipment() {
+		return pendingOrderQueue.peek() != null;
+	}
+	
+	// private helper function to update the next shipment date for the table to display
+	private void updateNextShipmentForTable() {
+		PendingOrder nextOrder = pendingOrderQueue.peek();
+		if(nextOrder == null) {
+			setNextShipmentForTable("None");
+		}
+		else {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			String nextOrderDate = nextOrder.getExpectedArrival().format(formatter);
+			setNextShipmentForTable(nextOrderDate);
+		}
+	}
+	
 	/*
 	 * Create a new pending order object, and then add it to the pending order list.
 	 */
 	
-	public void addToPendingShipments(int expectedAmount, Calendar expectedDate) {	
+	public void addToPendingShipments(int expectedAmount, LocalDate expectedDate) {	
 		PendingOrder pending = new PendingOrder(expectedAmount, expectedDate);
-		pendingOrderList.add(pending);
+		pendingOrderQueue.add(pending);
+		updateNextShipmentForTable();
+	}
+	
+	// removes next shipment from the queue and returns it
+	public PendingOrder removeNextShipment() {
+		PendingOrder nextShipment = pendingOrderQueue.poll(); 
+		updateNextShipmentForTable();
+		return nextShipment;
 	}
 	
 }

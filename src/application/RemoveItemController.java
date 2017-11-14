@@ -1,5 +1,6 @@
 package application;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,18 +17,31 @@ public class RemoveItemController {
 	
 	@FXML
 	private Button cancelBtn;
+
+	/*
+	 * The main observable list from the main controller.
+	 */
+
+	private ObservableList<LineItem> appMainObservableList;
+
+	private LineItem item;
 	
-	public void setLabel(LineItem item) {
+	public void initialize(LineItem item) {
 		this.itemLbl.setText(item.getItemName());
+		this.item = item;
 	}
 	
 	public void handleDeleteBtn(ActionEvent event) {
-		
+		appMainObservableList.remove(item);
 	}
 	
 	public void handleCancelBtn(ActionEvent event) {
 		Stage stage = (Stage) cancelBtn.getScene().getWindow();
 		stage.close();
+	}
+
+	public void setAppMainObservableList(ObservableList<LineItem> lineItemObservableList) {
+		this.appMainObservableList = lineItemObservableList;	
 	}
 
 }

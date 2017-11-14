@@ -36,6 +36,7 @@ public class OrderMoreController {
 		this.item.addToPendingShipments(
 				Integer.parseInt(amountExpectedTxt.getText()), 
 				this.datePicker.getValue()); // gets LocalDate object from datePicker
+		handleCloseBtn(null);
 	}
 	
 	public void handleDatePicker(ActionEvent event) {

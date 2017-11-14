@@ -80,6 +80,10 @@ public class LineItem {
 		this.nextShipmentForTable = new SimpleStringProperty(nextShipmentForTable);
 	}
 	
+	public boolean hasNextShipment() {
+		return pendingOrderQueue.peek() != null;
+	}
+	
 	// private helper function to update the next shipment date for the table to display
 	private void updateNextShipmentForTable() {
 		PendingOrder nextOrder = pendingOrderQueue.peek();

@@ -39,6 +39,7 @@ public class AmountUsedController {
 		else {
 			throw new Exception("Stock cannot be negative");
 		}
+		handleCloseBtn(null);
 	}
 	
 	public void handleCloseBtn(ActionEvent event) {

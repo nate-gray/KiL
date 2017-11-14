@@ -12,17 +12,22 @@ public class PendingOrder implements Comparable<PendingOrder> {
 	private int expectedAmount; // Amount expected in the pending order.
 	private LocalDate expectedArrival; // Expected arrival date of the shipment. 
 	
+	public PendingOrder(){
+		
+	}
+	
 	public PendingOrder(int amount, LocalDate date) {
 		expectedAmount = amount;
 		expectedArrival = date;
 	}
-	
+
 	public int getExpectedAmount() {
 		return expectedAmount;
 	}
 	public void setExpectedAmount(int expectedAmount) {
 		this.expectedAmount = expectedAmount;
 	}
+
 	public LocalDate getExpectedArrival() {
 		return expectedArrival;
 	}

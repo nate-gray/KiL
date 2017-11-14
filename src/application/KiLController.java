@@ -3,7 +3,12 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -322,8 +327,11 @@ public class KiLController implements Initializable {
 		
 	}
 	
-	public void handleExportData() {
-		
+	public void handleExportData() throws JAXBException {
+	
+		ReadWrite write = new ReadWrite();
+		write.testing(lineItemObservableList);
+		write.writeData();
 	}
 	
 	public void handleExit() {

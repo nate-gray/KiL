@@ -1,14 +1,29 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.time.LocalDate;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
+
+import com.sun.javafx.collections.ObservableListWrapper;
+
 /*
  * This class is used to contain the data for the line items in the table of the GUI. 
  */
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "LineItem")
 
 public class LineItem {
 	
@@ -32,6 +47,9 @@ public class LineItem {
 	 * Line item constructor.  When a new line item is created, use the values entered from the modal window, and set the 
 	 * expected ship date to None, since no date has been entered for a brand new line item.
 	 */
+	public LineItem() {
+		
+	}
 	
 	public LineItem(String name, Integer stock) {
 		this.itemName = name;
@@ -42,12 +60,15 @@ public class LineItem {
 		this.nextShipmentForTable = new SimpleStringProperty("None");
 	}
 	
+//	@XmlAttribute(name = "itemName")
 	public String getItemName() {
 		return itemName;
 	}
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	
+//	@XmlAttribute(name = "stock")
 	public int getCurrentStock() {
 		return currentStock;
 	}
@@ -55,9 +76,9 @@ public class LineItem {
 		this.currentStock = currentStock;
 		this.stockForTable = new SimpleIntegerProperty(currentStock); /// what does this do? (Andy)
 	}
-	public String getItemNameForTable() { /// is this needed/used? (Andy)
-		return itemNameForTable.get();
-	}
+//	public String getItemNameForTable() { /// is this needed/used? (Andy)
+//		return itemNameForTable.get();
+//	}
 
 	public void setItemNameForTable(String itemNameForTable) { /// is this needed/used? (Andy)
 		this.itemNameForTable = new SimpleStringProperty(itemNameForTable);
@@ -67,9 +88,9 @@ public class LineItem {
 		return stockForTable.get();
 	}
 
-	public String getNextShipmentForTable() { /// is this needed/used? (Andy)
-		return nextShipmentForTable.get();
-	}
+//	public String getNextShipmentForTable() { /// is this needed/used? (Andy)
+//		return nextShipmentForTable.get();
+//	}
 
 	public void setNextShipmentForTable(String nextShipmentForTable) { /// is this needed/used? (Andy)
 		this.nextShipmentForTable = new SimpleStringProperty(nextShipmentForTable);
@@ -83,6 +104,11 @@ public class LineItem {
 		PendingOrder pending = new PendingOrder(expectedAmount, expectedDate);
 		pendingOrderQueue.add(pending);
 	}
+	
+//	public PriorityQueue<PendingOrder> getPendingOrders(){
+//		return this.pendingOrderQueue;
+//	}
+	
 	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <item>
+        <itemNameForTable/>
+        <stockForTable/>
+        <nextShipmentForTable/>
+        <itemName>ef</itemName>
+        <currentStock>4</currentStock>
+    </item>
+    <item>
+        <itemNameForTable/>
+        <stockForTable/>
+        <nextShipmentForTable/>
+        <itemName>two</itemName>
+        <currentStock>3</currentStock>
+    </item>
+</items>

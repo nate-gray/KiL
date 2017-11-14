@@ -249,7 +249,7 @@ public class KiLController implements Initializable {
 		stage.setResizable(false);
 		stage.showAndWait();
 		
-		// doesn't need a refresh since the order queue is (currently) hidden from the user
+		theTable.refresh();
 	}
 	
 	public void removeClicked() throws IOException {

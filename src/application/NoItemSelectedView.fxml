@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NoItemSelectedController">
+<Pane fx:id="messageLbl" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NoItemSelectedController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="No Item Selected! Please select an item from the table." wrapText="true" />
       <Button fx:id="okayBtn" layoutX="82.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleCloseBtn" prefHeight="27.0" prefWidth="200.0" text="Okay" />

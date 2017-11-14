@@ -91,7 +91,7 @@ public class LineItem {
 			setNextShipmentForTable("None");
 		}
 		else {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//"MM/dd/yyyy");
 			String nextOrderDate = nextOrder.getExpectedArrival().format(formatter);
 			setNextShipmentForTable(nextOrderDate);
 		}

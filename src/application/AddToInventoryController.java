@@ -99,7 +99,12 @@ public class AddToInventoryController {
 	public void initialize(LineItem item) {
 		this.itemLbl.setText(item.getItemName());
 		this.selectedItem = item;
-		handleExpectedRadio(null); // set the expected shipment as the default
+		if(item.hasNextShipment()) {
+			handleExpectedRadio(null); // if there are shipments in the queue, set them to default radio 
+		}
+		else {
+			handleCustomRadio(null); // set the custom shipment
+		}
 	}
 
 }

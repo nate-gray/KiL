@@ -77,9 +77,9 @@ public class LineItem {
 		this.currentStock = currentStock;
 		setStockForTable(currentStock);
 	}
-//	public String getItemNameForTable() { /// is this needed/used? (Andy)
-//		return itemNameForTable.get();
-//	}
+	public String getItemNameForTable() { /// is this needed/used? (Andy)
+		return itemNameForTable.get();
+	}
 
 	public void setItemNameForTable(String itemNameForTable) {
 		this.itemNameForTable = new SimpleStringProperty(itemNameForTable);

@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -95,6 +97,7 @@ public class KiLController implements Initializable {
 	 * Allow access to the list through the getter.
 	 */
 	private ObservableList<LineItem> lineItemObservableList = FXCollections.observableArrayList();
+	private FilteredList<LineItem> filterObservableList = new FilteredList<>(lineItemObservableList, p -> true);
 	
 	public ObservableList<LineItem> getItemsInList() {
 		return lineItemObservableList;
@@ -112,7 +115,24 @@ public class KiLController implements Initializable {
 		lineItemColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("itemNameForTable"));
 		stockColumn.setCellValueFactory(new PropertyValueFactory<LineItem, Integer>("stockForTable"));
 		nextShipmentColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("nextShipmentForTable"));
-		theTable.setItems(lineItemObservableList);	
+		theTable.setItems(lineItemObservableList);
+		filterTxt.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterObservableList.setPredicate(item -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String filter = newValue.toLowerCase();
+                if (item.getItemName().toLowerCase().contains(filter)) {
+                    return true;
+                }
+                if (Integer.toString(item.getCurrentStock()).contains(filter)) {
+                    return true;
+                }
+                return false;
+            });
+		});
+		theTable.setItems(filterObservableList);
+		theTable.refresh();
 	}
 	
 	/*
@@ -157,7 +177,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -193,7 +213,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -228,7 +248,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -254,7 +274,7 @@ public class KiLController implements Initializable {
 		stage.setResizable(false);
 		stage.showAndWait();
 		
-		// doesn't need a refresh since the order queue is (currently) hidden from the user
+		theTable.refresh();
 	}
 	
 	public void removeClicked() throws IOException {
@@ -263,7 +283,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayNoItemSelectedWarning();
+			displayWarning();
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -294,9 +314,13 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
-	public void displayNoItemSelectedWarning() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NoItemSelectedView.fxml"));
+	public void displayWarning() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
+		
+		// put the warning controller in here? -- need an initializier
+		//NoItemSelectedController removeItemController = fxmlLoader.<NoItemSelectedController>getController();
+		//removeItemController.initialize("Test");
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -305,7 +329,7 @@ public class KiLController implements Initializable {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setOpacity(1);
-		stage.setTitle("Add To Inventory");
+		stage.setTitle("Warning!");
 		stage.setScene(new Scene(parent, 375, 84));
 		stage.setResizable(false);
 		stage.showAndWait();
@@ -339,7 +363,7 @@ public class KiLController implements Initializable {
 	}
 	
 	public void handleFilterBtn() {
-		
+
 	}
 		
 }

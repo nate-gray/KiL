@@ -61,6 +61,9 @@ public class AddToInventoryController {
 		else { // new stock > 999
 			throw new Exception("Stock cannot exceed 999");
 		}
+		
+		// close this extra window once the user clicks "Add to Stock"
+		handleCloseBtn(null);
 	}
 
 	public void handleCloseBtn(ActionEvent event) {
@@ -74,9 +77,6 @@ public class AddToInventoryController {
 	 * Enable the expected label.
 	 */
 	public void handleExpectedRadio(ActionEvent event) {
-		setExpectedRadio();
-	}
-	private void setExpectedRadio() {
 		expectedRadio.setSelected(true);
 		customRadio.setSelected(false);
 		customTxtFld.setDisable(true);
@@ -94,16 +94,17 @@ public class AddToInventoryController {
 		expectedAmountLbl.setDisable(true);
 		customTxtFld.setEditable(true);
 	}
-
-	public void setSelectedItem(LineItem item) {
-		this.selectedItem = item;
-	}
 	
 	// set up text, item, and defaults for this Controller
 	public void initialize(LineItem item) {
 		this.itemLbl.setText(item.getItemName());
 		this.selectedItem = item;
-		setExpectedRadio(); // set the expected shipment as the default
+		if(item.hasNextShipment()) {
+			handleExpectedRadio(null); // if there are shipments in the queue, set them to default radio 
+		}
+		else {
+			handleCustomRadio(null); // set the custom shipment
+		}
 	}
 
 }

@@ -33,6 +33,7 @@ public class RemoveItemController {
 	
 	public void handleDeleteBtn(ActionEvent event) {
 		appMainObservableList.remove(item);
+		handleCancelBtn(null);
 	}
 	
 	public void handleCancelBtn(ActionEvent event) {

@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -90,6 +92,7 @@ public class KiLController implements Initializable {
 	 * Allow access to the list through the getter.
 	 */
 	private ObservableList<LineItem> lineItemObservableList = FXCollections.observableArrayList();
+	private FilteredList<LineItem> filterObservableList = new FilteredList<>(lineItemObservableList, p -> true);
 	
 	public ObservableList<LineItem> getItemsInList() {
 		return lineItemObservableList;
@@ -107,7 +110,24 @@ public class KiLController implements Initializable {
 		lineItemColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("itemNameForTable"));
 		stockColumn.setCellValueFactory(new PropertyValueFactory<LineItem, Integer>("stockForTable"));
 		nextShipmentColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("nextShipmentForTable"));
-		theTable.setItems(lineItemObservableList);	
+		theTable.setItems(lineItemObservableList);
+		filterTxt.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterObservableList.setPredicate(item -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String filter = newValue.toLowerCase();
+                if (item.getItemName().toLowerCase().contains(filter)) {
+                    return true;
+                }
+                if (Integer.toString(item.getCurrentStock()).contains(filter)) {
+                    return true;
+                }
+                return false;
+            });
+		});
+		theTable.setItems(filterObservableList);
+		theTable.refresh();
 	}
 	
 	/*
@@ -331,7 +351,7 @@ public class KiLController implements Initializable {
 	}
 	
 	public void handleFilterBtn() {
-		
+
 	}
 		
 }

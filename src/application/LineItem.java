@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -74,26 +75,47 @@ public class LineItem {
 	}
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
-		this.stockForTable = new SimpleIntegerProperty(currentStock); /// what does this do? (Andy)
+		setStockForTable(currentStock);
 	}
 //	public String getItemNameForTable() { /// is this needed/used? (Andy)
 //		return itemNameForTable.get();
 //	}
 
-	public void setItemNameForTable(String itemNameForTable) { /// is this needed/used? (Andy)
+	public void setItemNameForTable(String itemNameForTable) {
 		this.itemNameForTable = new SimpleStringProperty(itemNameForTable);
 	}
 
-	public Integer getStockForTable() { /// is this needed/used? (Andy)
+	public Integer getStockForTable() {
 		return stockForTable.get();
 	}
+	
+	public void setStockForTable(int stockForTable) {
+		this.stockForTable = new SimpleIntegerProperty(currentStock); /// what does this do? (Andy)
+	}
+	
+	public String getNextShipmentForTable() {
+		return nextShipmentForTable.get();
+	}
 
-//	public String getNextShipmentForTable() { /// is this needed/used? (Andy)
-//		return nextShipmentForTable.get();
-//	}
-
-	public void setNextShipmentForTable(String nextShipmentForTable) { /// is this needed/used? (Andy)
+	public void setNextShipmentForTable(String nextShipmentForTable) {
 		this.nextShipmentForTable = new SimpleStringProperty(nextShipmentForTable);
+	}
+	
+	public boolean hasNextShipment() {
+		return pendingOrderQueue.peek() != null;
+	}
+	
+	// private helper function to update the next shipment date for the table to display
+	private void updateNextShipmentForTable() {
+		PendingOrder nextOrder = pendingOrderQueue.peek();
+		if(nextOrder == null) {
+			setNextShipmentForTable("None");
+		}
+		else {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//"MM/dd/yyyy");
+			String nextOrderDate = nextOrder.getExpectedArrival().format(formatter);
+			setNextShipmentForTable(nextOrderDate);
+		}
 	}
 	
 	/*
@@ -103,16 +125,19 @@ public class LineItem {
 	public void addToPendingShipments(int expectedAmount, LocalDate expectedDate) {	
 		PendingOrder pending = new PendingOrder(expectedAmount, expectedDate);
 		pendingOrderQueue.add(pending);
+		updateNextShipmentForTable();
 	}
 	
-//	public PriorityQueue<PendingOrder> getPendingOrders(){
-//		return this.pendingOrderQueue;
-//	}
+	public PriorityQueue<PendingOrder> getPendingOrders(){
+		return this.pendingOrderQueue;
+	}
 	
 	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {
-		return pendingOrderQueue.poll();
+		PendingOrder nextShipment = pendingOrderQueue.poll(); 
+		updateNextShipmentForTable();
+		return nextShipment;
 	}
 	
 }

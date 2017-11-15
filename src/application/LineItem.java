@@ -77,7 +77,7 @@ public class LineItem {
 		this.currentStock = currentStock;
 		setStockForTable(currentStock);
 	}
-	public String getItemNameForTable() { /// is this needed/used? (Andy)
+	public String getItemNameForTable() {
 		return itemNameForTable.get();
 	}
 
@@ -127,11 +127,6 @@ public class LineItem {
 		pendingOrderQueue.add(pending);
 		updateNextShipmentForTable();
 	}
-	
-	public PriorityQueue<PendingOrder> getPendingOrders(){
-		return this.pendingOrderQueue;
-	}
-	
 	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {

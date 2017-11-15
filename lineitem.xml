@@ -4,14 +4,14 @@
         <itemNameForTable/>
         <stockForTable/>
         <nextShipmentForTable/>
-        <itemName>ef</itemName>
-        <currentStock>4</currentStock>
+        <itemName>NateGray</itemName>
+        <currentStock>10</currentStock>
     </item>
     <item>
         <itemNameForTable/>
         <stockForTable/>
         <nextShipmentForTable/>
-        <itemName>two</itemName>
+        <itemName>MikeGray</itemName>
         <currentStock>3</currentStock>
     </item>
 </items>

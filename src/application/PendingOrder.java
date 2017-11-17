@@ -2,6 +2,8 @@ package application;
 
 import java.time.LocalDate;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /*
  * This class is used to create a new pendingOrder object. 
  * These objects will be stored in an ArrayList of the LineItem object.
@@ -11,6 +13,10 @@ public class PendingOrder implements Comparable<PendingOrder> {
 	
 	private int expectedAmount; // Amount expected in the pending order.
 	private LocalDate expectedArrival; // Expected arrival date of the shipment. 
+	
+	public PendingOrder(){
+		
+	}
 	
 	public PendingOrder(int amount, LocalDate date) {
 		expectedAmount = amount;
@@ -23,6 +29,8 @@ public class PendingOrder implements Comparable<PendingOrder> {
 	public void setExpectedAmount(int expectedAmount) {
 		this.expectedAmount = expectedAmount;
 	}
+
+	@XmlJavaTypeAdapter(value = LocalDateAdapter.class)
 	public LocalDate getExpectedArrival() {
 		return expectedArrival;
 	}

@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,9 +8,23 @@ import java.time.format.DateTimeFormatter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
+
+import com.sun.javafx.collections.ObservableListWrapper;
+
 /*
  * This class is used to contain the data for the line items in the table of the GUI. 
  */
+
+@XmlAccessorType(XmlAccessType.FIELD)  // This tells the marshaller to write the fields to the xml. 
 
 public class LineItem {
 	
@@ -17,8 +32,13 @@ public class LineItem {
 	 * Properties for displaying the data in the table view
 	 */
 	
+	@XmlTransient  //@XMLTransient will ignore these fields, since we do not need to writ them to the XML. 
 	private SimpleStringProperty itemNameForTable; 
+	
+	@XmlTransient
 	private SimpleIntegerProperty stockForTable;
+	
+	@XmlTransient
 	private SimpleStringProperty nextShipmentForTable;
 	
 	/*
@@ -33,6 +53,9 @@ public class LineItem {
 	 * Line item constructor.  When a new line item is created, use the values entered from the modal window, and set the 
 	 * expected ship date to None, since no date has been entered for a brand new line item.
 	 */
+	public LineItem() {
+		
+	}
 	
 	public LineItem(String name, Integer stock) {
 		this.itemName = name;
@@ -43,12 +66,15 @@ public class LineItem {
 		this.nextShipmentForTable = new SimpleStringProperty("None");
 	}
 	
+//	@XmlAttribute(name = "itemName")
 	public String getItemName() {
 		return itemName;
 	}
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	
+//	@XmlAttribute(name = "stock")
 	public int getCurrentStock() {
 		return currentStock;
 	}
@@ -56,7 +82,7 @@ public class LineItem {
 		this.currentStock = currentStock;
 		setStockForTable(currentStock);
 	}
-	public String getItemNameForTable() {
+	public String getItemNameForTable() { /// is this needed/used? (Andy)
 		return itemNameForTable.get();
 	}
 
@@ -105,6 +131,10 @@ public class LineItem {
 		PendingOrder pending = new PendingOrder(expectedAmount, expectedDate);
 		pendingOrderQueue.add(pending);
 		updateNextShipmentForTable();
+	}
+	
+	public PriorityQueue<PendingOrder> getPendingOrders(){
+		return this.pendingOrderQueue;
 	}
 	
 	// removes next shipment from the queue and returns it

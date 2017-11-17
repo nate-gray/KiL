@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
@@ -23,8 +24,7 @@ import com.sun.javafx.collections.ObservableListWrapper;
  * This class is used to contain the data for the line items in the table of the GUI. 
  */
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "LineItem")
+@XmlAccessorType(XmlAccessType.FIELD)  // This tells the marshaller to write the fields to the xml. 
 
 public class LineItem {
 	
@@ -32,8 +32,13 @@ public class LineItem {
 	 * Properties for displaying the data in the table view
 	 */
 	
+	@XmlTransient  //@XMLTransient will ignore these fields, since we do not need to writ them to the XML. 
 	private SimpleStringProperty itemNameForTable; 
+	
+	@XmlTransient
 	private SimpleIntegerProperty stockForTable;
+	
+	@XmlTransient
 	private SimpleStringProperty nextShipmentForTable;
 	
 	/*
@@ -131,7 +136,6 @@ public class LineItem {
 	public PriorityQueue<PendingOrder> getPendingOrders(){
 		return this.pendingOrderQueue;
 	}
-	
 	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {

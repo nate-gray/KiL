@@ -1,6 +1,7 @@
 package application;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 public class KiLController implements Initializable {
 	
@@ -90,6 +92,12 @@ public class KiLController implements Initializable {
 	
 	@FXML
 	private MenuItem exit;
+	
+	/*
+	 * Create a File Chooser for importing and exporting data. 
+	 */
+	
+	FileChooser fc = new FileChooser();
 	
 	/*
 	 * Create a new observable list that will populate the table view. 
@@ -347,15 +355,28 @@ public class KiLController implements Initializable {
 		
 	}
 	
-	public void handleImportData() {
+	public void handleImportData() throws JAXBException {
 		
+		fc.setTitle("Import Data");
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
+		File selectedFile = fc.showOpenDialog(null);
+		if(selectedFile != null){
+			ReadWrite read = new ReadWrite();
+			read.setAppMainObservableList(lineItemObservableList);
+			read.readData(selectedFile);
+		}
 	}
 	
 	public void handleExportData() throws JAXBException {
-	
-		ReadWrite write = new ReadWrite();
-		write.testing(lineItemObservableList);
-		write.writeData();
+
+		fc.setTitle("Export Data");
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
+		File exportedFile = fc.showSaveDialog(null);
+		if(exportedFile != null){
+			ReadWrite write = new ReadWrite();
+			write.writeList(lineItemObservableList);
+			write.writeData(exportedFile);
+		}		
 	}
 	
 	public void handleExit() {

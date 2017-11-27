@@ -43,6 +43,7 @@ public class AddToInventoryController {
 			PendingOrder nextShipment = this.selectedItem.removeNextShipment();
 			if(nextShipment == null) {
 				/// todo: need to figure out exception handling, I think we should save for end though
+				//this.parent.
 				throw new Exception("No next shipment in queue");
 			}
 			newStock += nextShipment.getExpectedAmount();

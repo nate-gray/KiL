@@ -187,7 +187,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -223,7 +224,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -258,7 +260,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -293,7 +296,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -306,8 +310,8 @@ public class KiLController implements Initializable {
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
 		removeItemController.initialize(selectedLineItem);
-		
 		removeItemController.setAppMainObservableList(lineItemObservableList);  
+		displayWarning("test");
 		
 		/*
 		 * Display the modal window for removing an item. 
@@ -324,13 +328,13 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
-	public void displayWarning() throws IOException {
+	public void displayWarning(String message) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		// put the warning controller in here? -- need an initializier
-		//NoItemSelectedController removeItemController = fxmlLoader.<NoItemSelectedController>getController();
-		//removeItemController.initialize("Test");
+		DisplayWarningController warningController = fxmlLoader.<DisplayWarningController>getController();
+		warningController.initialize(message);
 		
 		/*
 		 * Display the modal window for adding to the inventory.

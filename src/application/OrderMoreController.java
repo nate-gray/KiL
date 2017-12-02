@@ -47,14 +47,20 @@ public class OrderMoreController {
 		         datePicker.setPromptText(pattern.toLowerCase()); // shows "yyyy-mm-dd" when no number entered
 		     }
 		     @Override public String toString(LocalDate date) {
-		         if (date != null) return dateFormatter.format(date);
-		         else return "";
+		         if (date != null) { 
+		        	 	return dateFormatter.format(date);
+		         }
+		         else { 
+		        	 	return "";
+		         }
 		     }
 		     @Override public LocalDate fromString(String string) {
 		         if (string != null && !string.isEmpty()) {
 		             return LocalDate.parse(string, dateFormatter);
 		         } 
-		         else return null;
+		         else {
+		        	 	return null;
+		         }
 		     }
 		}
 		StringConverter<LocalDate> myConverter = new myDateConverter();

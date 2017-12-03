@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,9 +29,7 @@ public class OrderMoreController {
 	@FXML
 	private Button closeBtn;
 
-	// internal LineItem so we know which was selected
 	private LineItem item;
-
 	private KiLController parent;
 
 	public void handleEnterShipmentBtn(ActionEvent event) throws IOException {

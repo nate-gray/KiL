@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,7 +45,6 @@ public class AmountUsedController {
 	}
 	
 	public void initialize(KiLController parent, LineItem item) {
-		// set name of item
 		this.parent = parent;
 		this.itemLbl.setText(item.getItemName());
 		this.item = item;

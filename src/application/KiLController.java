@@ -1,21 +1,14 @@
 package application;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -163,7 +156,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AddNewLineItemController addLineItemController = fxmlLoader.<AddNewLineItemController>getController();
-		addLineItemController.setAppMainObservableList(lineItemObservableList);  
+		addLineItemController.initialize(this, lineItemObservableList);  
 		
 		/*
 		 * Display the modal window
@@ -201,7 +194,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
-		addToInventoryController.initialize(selectedLineItem);
+		addToInventoryController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -237,7 +230,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AmountUsedController amountUsedController = fxmlLoader.<AmountUsedController>getController();
-		amountUsedController.initialize(selectedLineItem);
+		amountUsedController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for entering the amount used. 
@@ -273,7 +266,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		OrderMoreController orderMoreController = fxmlLoader.<OrderMoreController>getController();
-		orderMoreController.initialize(selectedLineItem);
+		orderMoreController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for ordering more. 
@@ -309,9 +302,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
-		removeItemController.initialize(selectedLineItem);
-		removeItemController.setAppMainObservableList(lineItemObservableList);  
-		displayWarning("test");
+		removeItemController.initialize(lineItemObservableList, selectedLineItem);
 		
 		/*
 		 * Display the modal window for removing an item. 

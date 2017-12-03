@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="209.0" maxWidth="315.0" minHeight="209.0" minWidth="315.0" prefHeight="209.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddToInventoryController">
+<Pane maxHeight="209.0" maxWidth="315.0" minHeight="209.0" minWidth="315.0" prefHeight="209.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ReceivedShipmentController">
    <children>
       <RadioButton fx:id="expectedRadio" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleExpectedRadio" text="Expected in next shipment" />
       <RadioButton fx:id="customRadio" layoutX="14.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleCustomRadio" text="Custom" />

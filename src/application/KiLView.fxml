@@ -50,7 +50,7 @@
                               <MenuItem fx:id="removeLineItemMenu" mnemonicParsing="false" onAction="#removeClicked" text="Remove Line Item" />
                               <MenuItem fx:id="importData" mnemonicParsing="false" onAction="#handleImportData" text="Import Data" />
                               <MenuItem fx:id="exportData" mnemonicParsing="false" onAction="#handleExportData" text="Export Data" />
-                          <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
+                          <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                         </items>
                       </Menu>
                     </menus>

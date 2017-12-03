@@ -137,6 +137,12 @@ public class LineItem {
 		return this.pendingOrderQueue;
 	}
 	
+	// Precondition: queue is not empty
+	// peek at next shipment amount, doesn't check if there is anything in the queue
+	public int getNextShipmentAmount() {
+		return pendingOrderQueue.peek().getExpectedAmount();	
+	}
+	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {
 		PendingOrder nextShipment = pendingOrderQueue.poll(); 

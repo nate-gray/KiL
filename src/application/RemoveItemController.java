@@ -26,11 +26,6 @@ public class RemoveItemController {
 
 	private LineItem item;
 	
-	public void initialize(LineItem item) {
-		this.itemLbl.setText(item.getItemName());
-		this.item = item;
-	}
-	
 	public void handleDeleteBtn(ActionEvent event) {
 		appMainObservableList.remove(item);
 		handleCancelBtn(null);
@@ -41,8 +36,9 @@ public class RemoveItemController {
 		stage.close();
 	}
 
-	public void setAppMainObservableList(ObservableList<LineItem> lineItemObservableList) {
+	public void initialize(ObservableList<LineItem> lineItemObservableList, LineItem item) {
 		this.appMainObservableList = lineItemObservableList;	
+		this.itemLbl.setText(item.getItemName());
+		this.item = item;
 	}
-
 }

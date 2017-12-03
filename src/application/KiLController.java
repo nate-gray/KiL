@@ -46,7 +46,7 @@ public class KiLController implements Initializable {
 	public Button addLineItemBtn;
 	
 	@FXML
-	private Button addToInventoryBtn;
+	private Button receivedInventoryBtn;
 	
 	@FXML
 	private Button enterAmountUsedBtn;
@@ -58,9 +58,6 @@ public class KiLController implements Initializable {
 	private Button removeBtn;
 	
 	@FXML
-	private Button filterBtn;
-	
-	@FXML
 	private TextField filterTxt;
 	
 	@FXML
@@ -68,15 +65,6 @@ public class KiLController implements Initializable {
 	
 	@FXML
 	private MenuItem removeLineItemMenu;
-	
-	@FXML
-	private MenuItem sortAlphabetically;
-	
-	@FXML
-	private MenuItem sortByCurrentStock;
-	
-	@FXML
-	private MenuItem sortByShipDate;
 	
 	@FXML
 	private MenuItem importData;
@@ -173,7 +161,7 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, AddNewLineItemController adds to the lineItemObservableList directly
 	}
 	
-	public void addToInventoryClicked() throws IOException {
+	public void receivedShipmentClicked() throws IOException {
 		
 		/*
 		 * Get the selected item in the table.
@@ -340,18 +328,6 @@ public class KiLController implements Initializable {
 		stage.showAndWait();
 	}
 	
-	public void handleSortAlphabetically() {
-		
-	}
-	
-	public void handleSortByStock() {
-		
-	}
-	
-	public void handleSortByDate() {
-		
-	}
-	
 	public void handleImportData() throws JAXBException {
 		
 		fc.setTitle("Import Data");
@@ -378,10 +354,6 @@ public class KiLController implements Initializable {
 	
 	public void handleExit() {
 		
-	}
-	
-	public void handleFilterBtn() {
-
 	}
 		
 }

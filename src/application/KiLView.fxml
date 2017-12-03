@@ -48,13 +48,6 @@
                         <items>
                               <MenuItem fx:id="addNewLineItemMenu" mnemonicParsing="false" onAction="#addNewLineItemClicked" text="Add New Line Item" />
                               <MenuItem fx:id="removeLineItemMenu" mnemonicParsing="false" onAction="#removeClicked" text="Remove Line Item" />
-                              <Menu mnemonicParsing="false" text="Sort">
-                                <items>
-                                  <MenuItem fx:id="sortAlphabetically" mnemonicParsing="false" onAction="#handleSortAlphabetically" text="Alphabetically" />
-                                    <MenuItem fx:id="sortByCurrentStock" mnemonicParsing="false" onAction="#handleSortByStock" text="By Current Stock" />
-                                    <MenuItem fx:id="sortByShipDate" mnemonicParsing="false" onAction="#handleSortByDate" text="By Expected Ship Date" />
-                                </items>
-                              </Menu>
                               <MenuItem fx:id="importData" mnemonicParsing="false" onAction="#handleImportData" text="Import Data" />
                               <MenuItem fx:id="exportData" mnemonicParsing="false" onAction="#handleExportData" text="Export Data" />
                           <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
@@ -88,10 +81,9 @@
                               <Button fx:id="orderMoreBtn" layoutX="11.0" layoutY="35.0" mnemonicParsing="false" onAction="#orderMoreClicked" prefHeight="27.0" prefWidth="148.0" text="Order More" />
                               <Button fx:id="addLineItemBtn" layoutX="11.0" layoutY="283.0" mnemonicParsing="false" onAction="#addNewLineItemClicked" prefHeight="27.0" prefWidth="148.0" text="Add Line Item" />
                               <Button fx:id="removeBtn" layoutX="11.0" layoutY="324.0" mnemonicParsing="false" onAction="#removeClicked" prefHeight="27.0" prefWidth="148.0" text="Remove Line Item" />
-                              <Button fx:id="addToInventoryBtn" layoutX="11.0" layoutY="79.0" mnemonicParsing="false" onAction="#addToInventoryClicked" prefHeight="27.0" prefWidth="148.0" text="Add To Inventory" />
+                              <Button fx:id="receivedInventoryBtn" layoutX="11.0" layoutY="79.0" mnemonicParsing="false" onAction="#receivedShipmentClicked" prefHeight="27.0" prefWidth="148.0" text="Received Shipment" />
                               <Button fx:id="enterAmountUsedBtn" layoutX="11.0" layoutY="125.0" mnemonicParsing="false" onAction="#enterAmountUsedClicked" prefHeight="27.0" prefWidth="148.0" text="Enter Amount Used" />
-                              <Button fx:id="filterBtn" layoutX="11.0" layoutY="215.0" mnemonicParsing="false" onAction="#handleFilterBtn" prefHeight="27.0" prefWidth="148.0" text="Filter" />
-                              <TextField fx:id="filterTxt" layoutX="8.0" layoutY="183.0" prefHeight="27.0" prefWidth="154.0" promptText="Filter for...." />
+                              <TextField fx:id="filterTxt" layoutX="8.0" layoutY="183.0" prefHeight="27.0" prefWidth="154.0" promptText="Search...." />
                            </children>
                         </AnchorPane>
                     </items>

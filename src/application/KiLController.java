@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -99,6 +100,7 @@ public class KiLController implements Initializable {
 	 */
 	private ObservableList<LineItem> lineItemObservableList = FXCollections.observableArrayList();
 	private FilteredList<LineItem> filterObservableList = new FilteredList<>(lineItemObservableList, p -> true);
+	private SortedList<LineItem> sortableList = new SortedList<>(filterObservableList);
 	
 	public ObservableList<LineItem> getItemsInList() {
 		return lineItemObservableList;
@@ -116,7 +118,6 @@ public class KiLController implements Initializable {
 		lineItemColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("itemNameForTable"));
 		stockColumn.setCellValueFactory(new PropertyValueFactory<LineItem, Integer>("stockForTable"));
 		nextShipmentColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("nextShipmentForTable"));
-		theTable.setItems(lineItemObservableList);
 		filterTxt.textProperty().addListener((observable, oldValue, newValue) -> {
             filterObservableList.setPredicate(item -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -132,7 +133,8 @@ public class KiLController implements Initializable {
                 return false;
             });
 		});
-		theTable.setItems(filterObservableList);
+		sortableList.comparatorProperty().bind(theTable.comparatorProperty());
+		theTable.setItems(sortableList);
 		theTable.refresh();
 	}
 	

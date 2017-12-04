@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javax.xml.bind.JAXBException;
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -173,7 +175,7 @@ public class KiLController implements Initializable {
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddToInventoryView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReceivedShipmentView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		/*
@@ -181,8 +183,8 @@ public class KiLController implements Initializable {
 		 * TODO: Also set the expected amount label.
 		 */
 		
-		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
-		addToInventoryController.initialize(this, selectedLineItem);
+		ReceivedShipmentController receivedShipmentController = fxmlLoader.<ReceivedShipmentController>getController();
+		receivedShipmentController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -353,7 +355,7 @@ public class KiLController implements Initializable {
 	}
 	
 	public void handleExit() {
-		
+		Platform.exit();
 	}
 		
 }

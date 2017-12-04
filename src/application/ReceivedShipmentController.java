@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
-public class AddToInventoryController {
+public class ReceivedShipmentController {
 
 	@FXML
 	private Label itemLbl;
@@ -117,6 +117,7 @@ public class AddToInventoryController {
 		this.selectedItem = item;
 		if(item.hasNextShipment()) {
 			handleExpectedRadio(null); // if there are shipments in the queue, set them to default radio 
+			expectedAmountLbl.setText(String.valueOf(item.getNextShipmentAmount()));
 		}
 		else {
 			handleCustomRadio(null); // set the custom shipment

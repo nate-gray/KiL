@@ -120,6 +120,16 @@ public class KiLController implements Initializable {
                 if (Integer.toString(item.getCurrentStock()).contains(filter)) {
                     return true;
                 }
+                if (item.hasNextShipment()) {
+                	if (item.getNextShipmentDate().toString().contains(filter)) {
+                		return true;
+                	}
+                }
+                if (!item.hasNextShipment()) {
+                	if ("none".contains(filter)) {
+                		return true;
+                	}
+                }
                 return false;
             });
 		});

@@ -135,6 +135,10 @@ public class LineItem {
 		return pendingOrderQueue.peek().getExpectedAmount();	
 	}
 	
+	public LocalDate getNextShipmentDate() {
+		return pendingOrderQueue.peek().getExpectedArrival();	
+	}
+	
 	// removes next shipment from the queue and returns it
 	public PendingOrder removeNextShipment() {
 		PendingOrder nextShipment = pendingOrderQueue.poll(); 

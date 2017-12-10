@@ -1,6 +1,5 @@
 package application;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,15 +9,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 
 /*
  * This class is used to contain the data for the line items in the table of the GUI. 
@@ -141,6 +133,10 @@ public class LineItem {
 	// peek at next shipment amount, doesn't check if there is anything in the queue
 	public int getNextShipmentAmount() {
 		return pendingOrderQueue.peek().getExpectedAmount();	
+	}
+	
+	public LocalDate getNextShipmentDate() {
+		return pendingOrderQueue.peek().getExpectedArrival();	
 	}
 	
 	// removes next shipment from the queue and returns it

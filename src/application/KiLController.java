@@ -120,6 +120,16 @@ public class KiLController implements Initializable {
                 if (Integer.toString(item.getCurrentStock()).contains(filter)) {
                     return true;
                 }
+                if (item.hasNextShipment()) {
+                	if (item.getNextShipmentDate().toString().contains(filter)) {
+                		return true;
+                	}
+                }
+                if (!item.hasNextShipment()) {
+                	if ("none".contains(filter)) {
+                		return true;
+                	}
+                }
                 return false;
             });
 		});
@@ -330,28 +340,43 @@ public class KiLController implements Initializable {
 		stage.showAndWait();
 	}
 	
-	public void handleImportData() throws JAXBException {
+	public void handleImportData() throws JAXBException, IOException {
 		
 		fc.setTitle("Import Data");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
 		File selectedFile = fc.showOpenDialog(null);
 		if(selectedFile != null){
 			ReadWrite read = new ReadWrite();
+			read.initialize(this);
 			read.setAppMainObservableList(lineItemObservableList);
-			read.readData(selectedFile);
+			
+			try{
+				if(read.checkIfValid(selectedFile)) {
+					read.readData(selectedFile);
+				}			
+			}
+			catch(Exception ex){
+				displayWarning("Invalid .kildata file!");
+			}
+			
 		}
 	}
 	
-	public void handleExportData() throws JAXBException {
+	public void handleExportData() throws JAXBException, IOException {
 
-		fc.setTitle("Export Data");
-		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
-		File exportedFile = fc.showSaveDialog(null);
-		if(exportedFile != null){
-			ReadWrite write = new ReadWrite();
-			write.writeList(lineItemObservableList);
-			write.writeData(exportedFile);
-		}		
+		if(this.lineItemObservableList.isEmpty()) {
+			displayWarning("No data to export!");
+		}
+		else {
+			fc.setTitle("Export Data");
+			fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
+			File exportedFile = fc.showSaveDialog(null);
+			if(exportedFile != null){
+				ReadWrite write = new ReadWrite();
+				write.writeList(lineItemObservableList);
+				write.writeData(exportedFile);		
+			}
+		}	
 	}
 	
 	public void handleExit() {

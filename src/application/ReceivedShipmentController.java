@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
-public class AddToInventoryController {
+public class ReceivedShipmentController {
 
 	@FXML
 	private Label itemLbl;
@@ -32,35 +33,49 @@ public class AddToInventoryController {
 	private RadioButton customRadio;
 
 	private LineItem selectedItem;
+	
+	private KiLController parent; // reference to parent controller for displaying warnings
 
-	public void handleAddToStockBtn(ActionEvent event) throws Exception {
+	public void handleAddToStockBtn(ActionEvent event) throws IOException {
 		
 		// make a variable for the new stock, starting with the current stock. We'll add to it later
-		int newStock = this.selectedItem.getCurrentStock();
+		int stock = this.selectedItem.getCurrentStock();
 		
 		if(expectedRadio.isSelected()) {
-		// add next expected shipment to current stock
-			PendingOrder nextShipment = this.selectedItem.removeNextShipment();
-			if(nextShipment == null) {
-				/// todo: need to figure out exception handling, I think we should save for end though
-				throw new Exception("No next shipment in queue");
+			if(!this.selectedItem.hasNextShipment()) {
+				this.parent.displayWarning("No next shipment in queue");
+				return;
 			}
-			newStock += nextShipment.getExpectedAmount();
+			int newStock = this.selectedItem.getNextShipmentAmount();
+			if(stock + newStock > 999) {
+				this.parent.displayWarning("Shipment cannot make stock exceed 999");
+				return;
+			}
+			// remove item from queue
+			this.selectedItem.removeNextShipment();
+			
+			// add next expected shipment to current stock
+			stock += newStock;
 		}
 		else if(customRadio.isSelected()) {
-			// add custom amount to current stock
-			newStock += Integer.parseInt(customTxtFld.getText());
+			try {
+				int newStock = Integer.parseInt(customTxtFld.getText());
+				if(newStock < 1 || newStock > 999) {
+					this.parent.displayWarning("Shipment must be between 1 and 999");
+					return;	
+				}
+				else if (stock + newStock > 999) {
+					this.parent.displayWarning("Shipment cannot make stock exceed 999");
+					return;
+				}
+				stock += newStock;
+			}
+			catch(NumberFormatException e) {
+				this.parent.displayWarning("Shipment must be an integer");
+				return;
+			}
 		}
-		else { /// we should have one default
-			throw new Exception("No radio button was selected");
-		}
-		
-		if(newStock <= 999) {
-			this.selectedItem.setCurrentStock(newStock);
-		}
-		else { // new stock > 999
-			throw new Exception("Stock cannot exceed 999");
-		}
+		this.selectedItem.setCurrentStock(stock);		
 		
 		// close this extra window once the user clicks "Add to Stock"
 		handleCloseBtn(null);
@@ -96,11 +111,13 @@ public class AddToInventoryController {
 	}
 	
 	// set up text, item, and defaults for this Controller
-	public void initialize(LineItem item) {
+	public void initialize(KiLController parent, LineItem item) {
+		this.parent = parent;
 		this.itemLbl.setText(item.getItemName());
 		this.selectedItem = item;
 		if(item.hasNextShipment()) {
 			handleExpectedRadio(null); // if there are shipments in the queue, set them to default radio 
+			expectedAmountLbl.setText(String.valueOf(item.getNextShipmentAmount()));
 		}
 		else {
 			handleCustomRadio(null); // set the custom shipment

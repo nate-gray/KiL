@@ -1,12 +1,16 @@
 package application;
 
-
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javax.xml.bind.JAXBException;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 public class KiLController implements Initializable {
 	
@@ -43,7 +48,7 @@ public class KiLController implements Initializable {
 	public Button addLineItemBtn;
 	
 	@FXML
-	private Button addToInventoryBtn;
+	private Button receivedInventoryBtn;
 	
 	@FXML
 	private Button enterAmountUsedBtn;
@@ -55,9 +60,6 @@ public class KiLController implements Initializable {
 	private Button removeBtn;
 	
 	@FXML
-	private Button filterBtn;
-	
-	@FXML
 	private TextField filterTxt;
 	
 	@FXML
@@ -65,15 +67,6 @@ public class KiLController implements Initializable {
 	
 	@FXML
 	private MenuItem removeLineItemMenu;
-	
-	@FXML
-	private MenuItem sortAlphabetically;
-	
-	@FXML
-	private MenuItem sortByCurrentStock;
-	
-	@FXML
-	private MenuItem sortByShipDate;
 	
 	@FXML
 	private MenuItem importData;
@@ -85,11 +78,19 @@ public class KiLController implements Initializable {
 	private MenuItem exit;
 	
 	/*
+	 * Create a File Chooser for importing and exporting data. 
+	 */
+	
+	FileChooser fc = new FileChooser();
+	
+	/*
 	 * Create a new observable list that will populate the table view. 
 	 * This list will contain all of the LineItem objects.
 	 * Allow access to the list through the getter.
 	 */
 	private ObservableList<LineItem> lineItemObservableList = FXCollections.observableArrayList();
+	private FilteredList<LineItem> filterObservableList = new FilteredList<>(lineItemObservableList, p -> true);
+	private SortedList<LineItem> sortableList = new SortedList<>(filterObservableList);
 	
 	public ObservableList<LineItem> getItemsInList() {
 		return lineItemObservableList;
@@ -107,7 +108,24 @@ public class KiLController implements Initializable {
 		lineItemColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("itemNameForTable"));
 		stockColumn.setCellValueFactory(new PropertyValueFactory<LineItem, Integer>("stockForTable"));
 		nextShipmentColumn.setCellValueFactory(new PropertyValueFactory<LineItem, String>("nextShipmentForTable"));
-		theTable.setItems(lineItemObservableList);	
+		filterTxt.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterObservableList.setPredicate(item -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String filter = newValue.toLowerCase();
+                if (item.getItemName().toLowerCase().contains(filter)) {
+                    return true;
+                }
+                if (Integer.toString(item.getCurrentStock()).contains(filter)) {
+                    return true;
+                }
+                return false;
+            });
+		});
+		sortableList.comparatorProperty().bind(theTable.comparatorProperty());
+		theTable.setItems(sortableList);
+		theTable.refresh();
 	}
 	
 	/*
@@ -128,7 +146,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AddNewLineItemController addLineItemController = fxmlLoader.<AddNewLineItemController>getController();
-		addLineItemController.setAppMainObservableList(lineItemObservableList);  
+		addLineItemController.initialize(this, lineItemObservableList);  
 		
 		/*
 		 * Display the modal window
@@ -145,18 +163,19 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, AddNewLineItemController adds to the lineItemObservableList directly
 	}
 	
-	public void addToInventoryClicked() throws IOException {
+	public void receivedShipmentClicked() throws IOException {
 		
 		/*
 		 * Get the selected item in the table.
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddToInventoryView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReceivedShipmentView.fxml"));
 		Parent parent = fxmlLoader.load();
 		
 		/*
@@ -164,8 +183,8 @@ public class KiLController implements Initializable {
 		 * TODO: Also set the expected amount label.
 		 */
 		
-		AddToInventoryController addToInventoryController = fxmlLoader.<AddToInventoryController>getController();
-		addToInventoryController.initialize(selectedLineItem);
+		ReceivedShipmentController receivedShipmentController = fxmlLoader.<ReceivedShipmentController>getController();
+		receivedShipmentController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -188,7 +207,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -200,7 +220,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		AmountUsedController amountUsedController = fxmlLoader.<AmountUsedController>getController();
-		amountUsedController.initialize(selectedLineItem);
+		amountUsedController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for entering the amount used. 
@@ -223,7 +243,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -235,7 +256,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		OrderMoreController orderMoreController = fxmlLoader.<OrderMoreController>getController();
-		orderMoreController.initialize(selectedLineItem);
+		orderMoreController.initialize(this, selectedLineItem);
 		
 		/*
 		 * Display the modal window for ordering more. 
@@ -258,7 +279,8 @@ public class KiLController implements Initializable {
 		 */
 		
 		if(theTable.getSelectionModel().getSelectedItem() == null) {
-			displayWarning();
+			displayWarning("No item selected");
+			return;
 		}
 		LineItem selectedLineItem = theTable.getSelectionModel().getSelectedItem();
 		
@@ -270,9 +292,7 @@ public class KiLController implements Initializable {
 		 */
 		
 		RemoveItemController removeItemController = fxmlLoader.<RemoveItemController>getController();
-		removeItemController.initialize(selectedLineItem);
-		
-		removeItemController.setAppMainObservableList(lineItemObservableList);  
+		removeItemController.initialize(lineItemObservableList, selectedLineItem);
 		
 		/*
 		 * Display the modal window for removing an item. 
@@ -289,9 +309,13 @@ public class KiLController implements Initializable {
 		// doesn't need a refresh, RemoveItemController removes from the item list (lineItemObservableList) directly
 	}
 	
-	public void displayWarning() throws IOException {
+	public void displayWarning(String message) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DisplayWarningView.fxml"));
 		Parent parent = fxmlLoader.load();
+		
+		// put the warning controller in here? -- need an initializier
+		DisplayWarningController warningController = fxmlLoader.<DisplayWarningController>getController();
+		warningController.initialize(message);
 		
 		/*
 		 * Display the modal window for adding to the inventory.
@@ -306,32 +330,32 @@ public class KiLController implements Initializable {
 		stage.showAndWait();
 	}
 	
-	public void handleSortAlphabetically() {
+	public void handleImportData() throws JAXBException {
 		
+		fc.setTitle("Import Data");
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
+		File selectedFile = fc.showOpenDialog(null);
+		if(selectedFile != null){
+			ReadWrite read = new ReadWrite();
+			read.setAppMainObservableList(lineItemObservableList);
+			read.readData(selectedFile);
+		}
 	}
 	
-	public void handleSortByStock() {
-		
-	}
-	
-	public void handleSortByDate() {
-		
-	}
-	
-	public void handleImportData() {
-		
-	}
-	
-	public void handleExportData() {
-		
+	public void handleExportData() throws JAXBException {
+
+		fc.setTitle("Export Data");
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.kildata"));
+		File exportedFile = fc.showSaveDialog(null);
+		if(exportedFile != null){
+			ReadWrite write = new ReadWrite();
+			write.writeList(lineItemObservableList);
+			write.writeData(exportedFile);
+		}		
 	}
 	
 	public void handleExit() {
-		
-	}
-	
-	public void handleFilterBtn() {
-		
+		Platform.exit();
 	}
 		
 }

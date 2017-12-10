@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <item>
+        <itemName>Test</itemName>
+        <currentStock>3</currentStock>
+        <pendingOrderQueue>
+            <expectedAmount>2</expectedAmount>
+            <expectedArrival>2017-11-22</expectedArrival>
+        </pendingOrderQueue>
+    </item>
+    <item>
+        <itemName>ItemTwo</itemName>
+        <currentStock>4</currentStock>
+    </item>
+    <item>
+        <itemName>ItemThree</itemName>
+        <currentStock>5</currentStock>
+        <pendingOrderQueue>
+            <expectedAmount>2</expectedAmount>
+            <expectedArrival>2017-11-21</expectedArrival>
+        </pendingOrderQueue>
+        <pendingOrderQueue>
+            <expectedAmount>5</expectedAmount>
+            <expectedArrival>2017-11-23</expectedArrival>
+        </pendingOrderQueue>
+    </item>
+    <item>
+        <itemName>ItemFour</itemName>
+        <currentStock>2</currentStock>
+    </item>
+    <item>
+        <itemName>Item5</itemName>
+        <currentStock>3</currentStock>
+    </item>
+</items>

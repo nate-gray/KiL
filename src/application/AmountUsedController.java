@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,14 +22,9 @@ public class AmountUsedController {
 	
 	@FXML
 	private Button closeBtn;
+	private KiLController parent;
 	
-	public void initialize(LineItem item) {
-		// set name of item
-		this.itemLbl.setText(item.getItemName());
-		this.item = item;
-	}
-	
-	public void handleEnterAmountUsedBtn(ActionEvent event) throws Exception {
+	public void handleEnterAmountUsedBtn(ActionEvent event) throws IOException {
 		// Calculate what new stock should be (current - amount used)
 		int newStock = item.getCurrentStock() - Integer.parseInt(amountUsedTxt.getText());
 		if(newStock >= 0) {
@@ -37,7 +33,8 @@ public class AmountUsedController {
 		}
 		// else, display an error
 		else {
-			throw new Exception("Stock cannot be negative");
+			this.parent.displayWarning("Stock cannot be negative");
+			return;
 		}
 		handleCloseBtn(null);
 	}
@@ -46,6 +43,10 @@ public class AmountUsedController {
 		Stage stage = (Stage) closeBtn.getScene().getWindow();
 		stage.close();
 	}
-
-
+	
+	public void initialize(KiLController parent, LineItem item) {
+		this.parent = parent;
+		this.itemLbl.setText(item.getItemName());
+		this.item = item;
+	}
 }

@@ -122,7 +122,7 @@ public class ReadWrite {
 				}
 			}
 			
-			if(x.getCurrentStock() < 0 || x.getCurrentStock() > 20){
+			if(x.getCurrentStock() < 0 || x.getCurrentStock() > 999){
 				this.parent.displayWarning("Stock must be between 0 and 999");
 				return false;
 			}
